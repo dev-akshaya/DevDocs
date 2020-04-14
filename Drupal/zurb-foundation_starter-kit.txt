@@ -1,0 +1,52 @@
+Zurb Foundation Starter Kit
+
+# Step 1: Download Zurb Foundation Theme 
+https://www.drupal.org/project/zurb_foundation
+
+# Step 2: Go to the STARTER kit and copy this folder to web and rename
+  cd /web/theme 
+  mv STARTER /web/theme
+  mv STARTER theme_name
+
+# Step 3: Rename STARTER.info.yml.txt to theme_name.info.yml
+Tip: always take a theme name starting with small letters
+
+# Step 4: Rename these files to your theme name
+  STARTER.css
+  STARTER.js
+  STARTER.scss
+  STARTER.theme
+
+# Step 5: 
+go to your theme folder, it has a keyword “STARTER” replace these with your theme_name.
+
+STARTER keyword present in these below files : 
+  STARTER.theme 
+  STARTER.libraries.yml 
+  STARTER.info.yml
+  package.json
+  theme-settings.php
+
+Tip: It is recommended to use a text editing application with search and "replace all" functionality.
+
+# Step 5: In your theme folder run these command
+npm install
+gulp
+gulp watch
+
+# Step 6: If you want to use grid in your theme then you need to enable it.
+Go to STARTER.scss and uncomment this line.
+//@include foundation-xy-grid-classes;
+@include foundation-xy-grid-classes;
+
+# Tips for install node and gulp using homebrew
+Tip: Its recommended to use node10 and gulp greater then 3.0
+
+## Install Node using homebrew
+node --version
+brew search node
+brew unlink node
+brew install node@8
+brew link node@8
+brew link --force --overwrite node@8
+node --version
