@@ -1,0 +1,295 @@
+
+# html.html.twig ----------------------------------------------------------
+## Add a description in header tag
+<meta name="description" content="Free Web tutorials">
+
+## Add  a class in body tag
+{% set attributes = attributes.addClass(‘container’) %}
+
+# page.html.twig ----------------------------------------------------------
+## Print your region
+{{ page.header }}
+{{ page.main_navigation }}
+{{ page.content }}
+{{ page.footer }}
+
+## partials
+Problem: if you have multiple page files and 
+         if you want to change something in header/footer 
+         then you have to change it multiple times 
+         to solve this problem use global header/footer twig files.
+
+Solution: Make a folder in theme and name it as “partials”
+Create header.html.twig and footer.html.twig and import them in page twig files.
+
+{% include directory ~ '/partials/header.html.twig' %}
+{% include directory ~ '/partials/footer.html.twig' %}
+
+# node.html.twig ----------------------------------------------------------
+## Print all contnet
+{{ contnet }}
+
+## Print individual contnent
+{{ content.‘field_image’ }} or {{ contnet[‘field_image’] }}
+{{ content.body }} or {{ contnet[‘body’] }}
+{{ content.‘field_tags }} or {{ contnet[‘field_tags] }}
+{{ content.‘comment’ }} or {{ contnet[‘comment’] }}
+{{ content.‘links’ }} or {{ contnet[‘links’] }}
+
+## Print article title in node.html.twig
+- {{ label }} or {{ node.label }} or {{ node.getTitle() }}
+- <a href="{{ url }}" rel="bookmark">{{ label }}</a>
+
+## Print a Individual Content with a switch button
+Example: a user wants to show or not a movie poster 
+
+{% if content.field_show_poster_['#items'].getValue()|first.value == "1" %}
+  <div class="movie-poster">
+    {{ content.field_movie_poster }}
+  </div>
+{% else %}
+  <h3>I Don't Want to Show the Poster</h3>
+{% endif %}
+
+Here, field_show_poster_ is a switch button that controls another field field_movie_poster.
+
+## You can render custom blocks in node.html.twig
+Write this function in theme_name.theme file
+  function joblister_preprocess_node(&$variables) {
+    $block = \Drupal\block\Entity\Block::load('block__latest_jobs');
+    $block_content = \Drupal::entityTypeManager()
+    ->getViewBuilder('block')
+    ->view($block);
+    $variables['latest_jobs'] = $block_content;
+
+    $block = \Drupal\block\Entity\Block::load('block__latest_articles');
+    $block_content = \Drupal::entityTypeManager()
+    ->getViewBuilder('block')
+    ->view($block);
+    $variables['latest_articles'] = $block_content;
+  }
+here, Block__latest_jobs and block__latest_articles are the machine name of the blocks.
+
+Render them in node.html.twig
+{{ latest_jobs }}
+{{ latest_articles }}
+
+## You can print all the machine name of blocks using Drush command
+drush ev 'print_r(\Drupal::configFactory()->listAll("block.block."));'
+
+## Print User information in node.html.twig
+{% if display_submitted %}
+	<footer>
+	  {{ author_picture }}
+	  <div{{ author_attributes }}>
+	    {% trans %}Submitted by {{ author_name }} on {{ date }}{% endtrans %}
+	    {{ metadata }}
+	  </div>
+	</footer>
+{% endif %}
+
+# views-view.html.twig ----------------------------------------------------------
+## Overriding views when view mode content : 
+views-view--machine name.twig
+views-view--machine name--display machine name.twig
+
+views-view-unformatted-machine name.twig
+views-view-unformatted-machine name--display machine name.twig
+
+## Overriding views when view mode grid:
+views-view-grid--machine name.html.twig
+
+## Overriding views when view mode table:
+views-view-table--machine name.html.twig
+
+## Overriding views when view mode unformatted:
+views-view-table--machine name.html.twig
+
+- Add new Array of classes
+{%
+  set row_classes_diff = [
+    default_row_class ? 'small-12 large-6',
+  ]
+%}
+
+- loop.index
+{% if (loop.index == 2) or (loop.index == 3) or (loop.index == 5) %}
+  <div{{ row.attributes.addClass(row_classes) }}>
+    <div>
+      {{ row.content }}
+    </div>
+  </div>
+{% endif %}
+
+## Overriding views when view mode fields: 
+views-view-fields--machine name.html.twig
+
+Example:
+<div class="card">
+  <div class="card-image">
+    {{ fields.field_image.content }}
+    <span class="card-title">{{ fields.title.content }}</span>
+  </div>
+  <div class="card-content teal">
+    <span class="white-text">
+      <h6 class="article_author">Author :{{ fields.uid.content }}</h6>
+      {{ fields.body.content }}
+    </span>
+  </div>
+  <div class="card-action">
+    {{ fields.view_node.content }}
+  </div>
+</div>
+
+# menu--main.html.twig ----------------------------------------------------------
+## Add classes in menu link
+{{ link(item.title, item.url, attributes.addClass('waves-light btn')) }}
+
+## Override the template : Defaut
+<li{{ item.attributes }}>
+  {{ link(item.title, item.url) }}
+  {% if item.below %}
+    {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
+  {% endif %}
+</li>
+
+Override the template: After Changes
+{%
+  set classes = [
+    'item',
+    item.is_expanded ? 'expanded',
+    item.is_collapsed ? 'collapsed',
+    item.in_active_trail ? 'active',
+  ]
+%}
+<a href=”{{ item.url }} {{ item.attributes.addClass(classes) }}”>{{ item.title }}</a>
+
+# field.html.twig ----------------------------------------------------------------------------
+## Add class in Label:
+<div class="label">{{ label }}</div>
+
+## Add class in content:
+<div class="content">{{ item.content }}</div>
+
+## For clean HTML you can also comment default classes:
+title_classes and attributes classes
+
+# field--text-with-summary.html.twig ----------------------------------------------------------
+this extends “field--text-html.twig” and field--text-html.twig extends "field.html.twig"
+
+- Add a class in summary:
+{% set attributes = attributes.addClass(‘our_summary_class’) %}
+extend a element from field.html.twig (Drupal Up)
+
+- Extend a custom block in "field--text-with-summary.html.twig "
+First: add an block in "field.html.twig"
+{% block field_block %}
+A custom block from field
+{% endblock %}
+
+Second: extend it in "field--text-with-summary.html.twig" 
+{% block field_block %}
+A custom block from field summary
+{% endblock %}
+
+# Quick Twig: ----------------------------------------------------------
+{{  }} - Print a variable and result of an action
+{% %} - Do something that means Logic of a template
+{# #} - Comment Something
+
+# Print a druapl variable:
+function theme_name_preprocessor_node(&$variables) {
+	kint($variables);
+}
+<p>Our view mode is {{ view_mode }}</p>
+
+# Twig for loop:
+Step 1: write this in "theme_name.theme"
+function theme_name_preprocessor_node(&$variables) {
+	$burger_list = array(
+    array(‘name’ => ‘Cheese Burger’),
+    array(‘name’ => ‘Paneer Burger’),
+    array(‘name’ => ‘Double Cheese Burger’)
+  );
+  $variables[‘burgers’] = $burger_list;
+}
+
+Step 2: write this in "__.html.twig"
+<ol>
+	{% for burger in burgers %}
+<li>{{ burger[‘name’] }}</li>
+{% endfor %}
+</ol>
+
+Step 3: Output
+  1.Cheese Burger
+	2.Paneer Burger
+	3.Double Cheese Burger
+
+# Twig if:
+{% if view_mode == ‘full’ %}
+  We are in Full View Mode
+{% if view_mode == ‘teaser’ %}
+  We are in Teaser View Mode
+{% endif %}
+
+# Twig Filters:
+- {{ we are getting very good with filters|upper }}
+
+- {% filter upper %}
+	  This text becomes upper
+  {% endfilter %}
+
+- {{ “<span>Hello, i am a Twig but my html will be stipped</span>”|striptags }}
+
+# Content without comment,link and fiels_tags
+<div{{ content_attributes }}> 
+  {{ content|without('comment', 'links', 'field_tags') }} 
+</div>
+
+# Print only year
+<div class="large-12 columns text-center">
+  &copy; {{ "now"|date('Y') }} {{ site_name }} {{ 'All rights reserved.'|t }}
+</div>
+
+# Twig Attributes: ---------------------------------------------------------------
+## Add a class : 
+{{ attributes.addClass(‘class_name’) }}
+
+## See all the available methods of a attribute
+	{{ kint(attributes) }}
+
+## Add a data attribute
+	{{ attributes.setAttribute(‘data-myname’, ‘toggle’) }}
+
+## Check if the attribute has this class or not
+  attributes.hasClass($class)
+
+## Remove attribute
+  attributes.removeAttribute()
+
+## Attribute to array
+  attributes.toArray()
+
+# Link to other pages in the site --------------------------------------------------
+## url(): generates absolute path given a route name and parameters
+{{ url(‘<front>’) }}
+{{ url(‘entity.node.canonical’, {‘node’: node.id}) }}
+{{ url(‘entity.node.canonical’, {‘user’: user.id}) }}
+
+Ex: {{ url(‘entity.node.canonical’, {‘node’: 2}) }}
+
+## path() : generates relative path given a route name and parameters
+{{ path(‘<front>’) }}
+{{ path(‘entity.node.canonical’, {‘node’: node.id}) }}
+{{ path(‘entity.node.canonical’, {‘user’: user.id}) }}
+
+Ex: {{ path(‘entity.node.canonical’, {‘node’: 2}) }}
+
+# Pre-processor to print logo in menu.html.twig --------------------------------------
+function circle_preprocess_menu(&$variables) {
+  $variables['logopath'] = '/' . drupal_get_path('theme','circle') . '/logo.png';
+}
+
+add this in required twig file
+{{logopath}}
