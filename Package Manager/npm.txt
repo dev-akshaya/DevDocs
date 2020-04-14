@@ -1,0 +1,86 @@
+#NPM Install Globally: 
+npm install -g npm
+
+#NPM to create package.json: 
+npm init
+npm init -y
+npm init --yes
+
+#NPM to create package-lock.json: 
+While installing a node module, this will automatically be created. (npm version > 4)
+
+#NPM set config:
+npm config set init-author-name "Akshaya"
+npm config set init-license "MIT"
+
+#NPM get config:
+npm get init-author-name
+
+#NPM delete config:
+npm config delete init-license
+
+#NPM Install Node Module:
+npm install lodash
+npm install lodash --save
+
+#NPM Uninstall Node Module:
+npm uninstall lodash
+npm uninstall lodash --save
+npm remove lodash --save
+npm rm lodash --save
+
+#NPM Install Node Module for devDependencies:
+npm install gulp gulp-sass --save-dev
+
+#NPM Uninstall Node Module from devDependencies:
+npm uninstall gulp gulp-sass --save-dev
+
+#NPM install certain version:
+npm install lodash@4.17.3 --save
+
+#NPM update Module:
+npm update lodash --save
+
+#NPM install global Modules:
+npm install -g nodemon 
+npm install -g live-server
+
+#NPM uninstall global Modules:
+npm uninstall -g nodemon 
+npm uninstall -g live-server
+
+#Find Global Modules and their root folder:
+npm root -g
+
+#NPM list Node Modules:
+npm list 
+npm list --depth 0 
+npm list --depth 1
+
+#NPM run a script: 
+"scripts": { 
+  "start": "node index.js" 
+}
+command to run: npm start
+
+
+#NPM Run Live Server:
+"scripts": { 
+  "server": "live-server" 
+}
+command to run: npm run server
+
+#NPM Module Versions: 
+"gulp": "^4.0.2"   => This will update the minor versions
+"gulp": "~4.0.2"   => This will update only bugs but no minor versions
+"gulp": "*"        => This will update the latest major version.
+
+#NPM install only Production dependencies (No devDependencies):
+npm install --production
+
+#NPM install all dependencies:
+npm install
+
+#NPM help:
+npm help
+npm
