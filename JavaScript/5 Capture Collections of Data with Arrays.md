@@ -185,7 +185,7 @@ nums.sort();
 //[10, 100000, 34, 67, 99]
 ```
 
-### REFERENCE TYPE
+### VALUE TYPES VS. REFERENCE TYPE
 
 ```js
 // ===============
