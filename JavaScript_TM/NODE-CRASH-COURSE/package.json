@@ -1,0 +1,17 @@
+{
+  "name": "node-crash-course",
+  "version": "1.0.0",
+  "description": "Node Crash Course Description",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Akshaya",
+  "license": "ISC",
+  "dependencies": {
+    "uuid": "^8.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
