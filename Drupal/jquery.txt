@@ -1,0 +1,24 @@
+## Jquery will work only single time
+- unbiend -----
+```js
+  Drupal.behaviors.menuCourse = {
+    attach: function (context, settings) {
+      $(".units .fa-angle-right")
+        .unbind()
+        .click(function (e) {
+          e.preventDefault();
+          var target = $(this).parent().parent().children(".list-group");
+          $(target).slideToggle();
+          // return false;
+          console.log("Akshaya");
+        });
+    },
+  };
+  ```
+
+## Add a class on Hover --------
+if ( jQuery(".nav-item").hasClass("menu-item--expanded")) {
+    jQuery(".menu-item--expanded").hover(function(){
+        jQuery(this).toggleClass("active");
+    });
+}
