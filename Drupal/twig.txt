@@ -93,8 +93,8 @@ drush ev 'print_r(\Drupal::configFactory()->listAll("block.block."));'
 views-view--machine name.twig
 views-view--machine name--display machine name.twig
 
-views-view-unformatted-machine name.twig
-views-view-unformatted-machine name--display machine name.twig
+views-view-unformatted--machine name.twig
+views-view-unformatted--machine name--display machine name.twig
 
 ## Overriding views when view mode grid:
 views-view-grid--machine name.html.twig
