@@ -293,3 +293,16 @@ function circle_preprocess_menu(&$variables) {
 
 add this in required twig file
 {{logopath}}
+
+## Print fields in twig
+{{ content.field_exclusive_course }}
+
+## Set fields in twig
+{% set show_exclusive_courses %}
+  {{ content.field_exclusive_course }}
+{% endset %}
+
+## Trim fields in twig
+{% set exclusive_course %}
+  {% spaceless %}{{ show_exclusive_courses|striptags|trim }}{% endspaceless %}
+{% endset %}
